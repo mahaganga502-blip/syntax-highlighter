@@ -1,0 +1,40 @@
+import re
+# ANSI color codes
+BLUE = "\033[94m"
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+RED = "\033[91m"
+RESET = "\
+code = input("Enter Python code: ")
+# Highlight comments
+code = re.sub(
+    r"(#.*)",
+    RED + r"\1" + RESET,
+    code
+)
+# Highlight strings
+code = re.sub(
+    r"(['\"].*?['\"])",
+    GREEN + r"\1" + RESET,
+    code
+)
+# Highlight keywords
+keywords = r"\b(def|if|else|elif|for|while|in|return|import|from|class|print|True|False|None)\b"
+code = re.sub(
+    keywords,
+    BLUE + r"\1" + RESET,
+    code
+)
+# Highlight numbers
+code = re.sub(
+    r"\b\d+\b",
+    YELLOW + r"\g<0>" + RESET,
+    code
+)
+print("\n===== HIGHLIGHTED CODE =====")
+print(code)
+
+OUTPUT:
+Enter Python code: print("Hello", name)
+===== HIGHLIGHTED CODE =====
+print("Hello", name)
